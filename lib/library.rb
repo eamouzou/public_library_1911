@@ -1,6 +1,16 @@
 class Library
-  attr_reader
+  attr_reader :name, :books, :authors
 
-  def initialize
+  def initialize(name)
+    @name = name
+    @books = []
+    @authors = []
   end
+
+  def add_author(author)
+    author.books.each {|book| @books << book}
+    @authors << author
+  end
+
+  
 end
