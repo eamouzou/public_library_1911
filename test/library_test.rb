@@ -40,6 +40,4 @@ class LibraryTest < Minitest::Test
     assert_equal ({:start=>"1960", :end=>"1960"}),  @dpl.publication_time_frame_for(@harper_lee)
   end
 
-
-
 end
