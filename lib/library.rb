@@ -6,6 +6,7 @@ class Library
     @books = []
     @authors = []
     @checked_out_books = []
+    @checked_out_books_counter = {}
   end
 
   def add_author(author)
@@ -38,12 +39,23 @@ class Library
       false
     else
       @checked_out_books << book
+      if @checked_out_books_counter[book] == nil
+        @checked_out_books_counter[book] = 0
+        @checked_out_books_counter[book] += 1
+      else
+        @checked_out_books_counter[book] += 1
+      end
       true
     end
   end
 
   def return(book)
     @checked_out_books.delete_if {|lib_book| lib_book == book}
+  end
+
+  def most_popular_book
+    most_pop = @checked_out_books_counter.max_by {|k, v| v}
+    most_pop[0]
   end
 
 

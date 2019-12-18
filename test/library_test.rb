@@ -92,8 +92,36 @@ class LibraryTest < Minitest::Test
     assert_equal true, @dpl.checkout(@mockingbird)
 
     @dpl.return(@mockingbird)
-    
+
     assert_equal true, @dpl.checkout(@mockingbird)
+  end
+
+  def test_most_popular_book
+    @villette = @charlotte_bronte.write("Villette", "1853")
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    @dpl.checkout(@jane_eyre)
+
+    assert_equal [@jane_eyre], @dpl.checked_out_books
+    assert_equal false, @dpl.checkout(@jane_eyre)
+
+    @dpl.return(@jane_eyre)
+
+    assert_equal [], @dpl.checked_out_books
+    assert_equal true, @dpl.checkout(@jane_eyre)
+    assert_equal true, @dpl.checkout(@villette)
+    assert_equal [@jane_eyre, @villette], @dpl.checked_out_books
+    assert_equal true, @dpl.checkout(@mockingbird)
+
+    @dpl.return(@mockingbird)
+
+    assert_equal true, @dpl.checkout(@mockingbird)
+
+    @dpl.return(@mockingbird)
+
+    assert_equal true, @dpl.checkout(@mockingbird)
+
+    assert_equal @mockingbird, @dpl.most_popular_book
   end
 
 end
