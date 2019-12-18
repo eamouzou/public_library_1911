@@ -13,9 +13,7 @@ class Library
   end
 
   def publication_time_frame_for(author)
-    years = []
-    author.books.each {|book| years << book.publication_year}
-    years_int = years.map {|year| year.to_i}
+    years_int = author.books.map {|book| book.publication_year.to_i}
 
     time_frame = author.books.reduce({}) do |acc, book|
       if years_int.count == 1
@@ -31,6 +29,7 @@ class Library
       acc
     end
   end
+  
 
 
 end
