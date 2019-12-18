@@ -25,6 +25,7 @@ class LibraryTest < Minitest::Test
   def test_it_can_add_authors_and_books
     @professor = @charlotte_bronte.write("The Professor", "1857")
     @villette = @charlotte_bronte.write("Villette", "1853")
+
     @dpl.add_author(@charlotte_bronte)
     @dpl.add_author(@harper_lee)
 
@@ -67,7 +68,32 @@ class LibraryTest < Minitest::Test
     assert_equal [@jane_eyre], @dpl.checked_out_books
 
     assert_equal false, @dpl.checkout(@jane_eyre)
+  end
 
+  def test_return
+    @villette = @charlotte_bronte.write("Villette", "1853")
+    @dpl.add_author(@charlotte_bronte)
+    @dpl.add_author(@harper_lee)
+    @dpl.checkout(@jane_eyre)
+
+    assert_equal [@jane_eyre], @dpl.checked_out_books
+    assert_equal false, @dpl.checkout(@jane_eyre)
+
+    @dpl.return(@jane_eyre)
+
+    assert_equal [], @dpl.checked_out_books
+    assert_equal true, @dpl.checkout(@jane_eyre)
+    assert_equal true, @dpl.checkout(@villette)
+    assert_equal [@jane_eyre, @villette], @dpl.checked_out_books
+    assert_equal true, @dpl.checkout(@mockingbird)
+
+    @dpl.return(@mockingbird)
+
+    assert_equal true, @dpl.checkout(@mockingbird)
+
+    @dpl.return(@mockingbird)
+    
+    assert_equal true, @dpl.checkout(@mockingbird)
   end
 
 end

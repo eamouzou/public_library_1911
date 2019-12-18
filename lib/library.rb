@@ -42,5 +42,9 @@ class Library
     end
   end
 
+  def return(book)
+    @checked_out_books.delete_if {|lib_book| lib_book == book}
+  end
+
 
 end
